@@ -1,0 +1,14 @@
+{
+  "expectedFiles": [
+    "exp1",
+    "exp2"
+  ],
+  "sftpConf": {
+    "source": "/mnt/src/sftp_uploads",
+    "destination": "/mnt/dest/sftp_uploads"
+  },
+  "s3Conf": {
+    "backUp": "s3://bkt/fresh/",
+    "stage": "s3://bkt/stage/"
+  }
+}

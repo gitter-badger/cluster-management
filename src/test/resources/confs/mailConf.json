@@ -1,0 +1,11 @@
+{
+  "host": "host.com",
+  "port": 587,
+  "sender": "sender@company.com",
+  "senderPassword": "password",
+  "recipients": [
+    "recipient@company.com"
+  ],
+  "authentication": "true",
+  "starttls": "true"
+}
