@@ -1,4 +1,4 @@
-package org.noetl.automation.services;
+package org.noetl.automation.services.notification;
 
 import org.noetl.pojos.MailConf;
 import org.apache.log4j.Logger;

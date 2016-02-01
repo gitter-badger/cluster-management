@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.util.StringUtils;
+import org.noetl.automation.services.notification.INotificationService;
 import org.noetl.aws.EMRClusterClient;
 import org.noetl.aws.utils.AWSS3Util;
 import org.noetl.parsers.JsonParser;

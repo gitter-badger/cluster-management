@@ -2,7 +2,7 @@ package org.noetl;
 
 import com.amazonaws.auth.BasicAWSCredentials;
 import org.noetl.automation.services.BaseService;
-import org.noetl.automation.services.ConsoleNotificationService;
+import org.noetl.automation.services.notification.ConsoleNotificationService;
 import org.noetl.aws.EMRClusterClient;
 import org.noetl.parsers.JsonParser;
 import org.noetl.pojos.AutomationConf;

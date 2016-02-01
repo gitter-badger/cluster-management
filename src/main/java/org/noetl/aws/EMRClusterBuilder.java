@@ -12,7 +12,7 @@ import com.amazonaws.services.elasticmapreduce.model.ScriptBootstrapActionConfig
 import com.amazonaws.services.elasticmapreduce.model.StepConfig;
 import com.amazonaws.services.elasticmapreduce.model.SupportedProductConfig;
 import com.amazonaws.services.elasticmapreduce.util.StepFactory;
-import org.noetl.automation.services.INotificationService;
+import org.noetl.automation.services.notification.INotificationService;
 import org.noetl.pojos.clusterConfigs.BootStrapConf;
 import org.noetl.pojos.clusterConfigs.ClusterConf;
 import org.noetl.pojos.clusterConfigs.ClusterConfJson;

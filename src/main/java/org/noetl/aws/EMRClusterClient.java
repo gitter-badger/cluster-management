@@ -7,7 +7,7 @@ import com.amazonaws.services.elasticmapreduce.model.Cluster;
 import com.amazonaws.services.elasticmapreduce.model.DescribeClusterRequest;
 import com.amazonaws.services.elasticmapreduce.model.DescribeClusterResult;
 import com.amazonaws.services.elasticmapreduce.model.TerminateJobFlowsRequest;
-import org.noetl.automation.services.INotificationService;
+import org.noetl.automation.services.notification.INotificationService;
 import org.noetl.pojos.clusterConfigs.ClusterConfJson;
 import org.apache.log4j.Logger;
 

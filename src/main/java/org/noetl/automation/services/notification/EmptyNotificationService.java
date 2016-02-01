@@ -1,4 +1,4 @@
-package org.noetl.automation.services;
+package org.noetl.automation.services.notification;
 
 public class EmptyNotificationService implements INotificationService {
   @Override

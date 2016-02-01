@@ -4,7 +4,7 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
 import com.amazonaws.util.StringUtils;
-import org.noetl.automation.services.INotificationService;
+import org.noetl.automation.services.notification.INotificationService;
 import org.noetl.aws.utils.AWSS3Util;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;

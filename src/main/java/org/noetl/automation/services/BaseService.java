@@ -2,6 +2,8 @@ package org.noetl.automation.services;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
+import org.noetl.automation.services.notification.INotificationService;
+import org.noetl.automation.services.notification.MailNotificationService;
 import org.noetl.pojos.MailConf;
 
 public abstract class BaseService {

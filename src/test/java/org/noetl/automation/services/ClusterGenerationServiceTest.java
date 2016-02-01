@@ -1,6 +1,7 @@
 package org.noetl.automation.services;
 
 import org.junit.Test;
+import org.noetl.automation.services.notification.EmptyNotificationService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
