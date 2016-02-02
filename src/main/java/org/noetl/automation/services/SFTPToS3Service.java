@@ -32,7 +32,7 @@ public class SFTPToS3Service extends BaseService {
   }
 
   public SFTPToS3Service(AutomationConf automationConf) throws IOException {
-    super(automationConf.getMailConf(), automationConf.getAccessKey(), automationConf.getSecretAccessKey());
+    super(automationConf.getNotification(), automationConf.getAccessKey(), automationConf.getSecretAccessKey());
     fileOps = new FileOps(notificationService);
     monitorConfJson = automationConf.getMonitorConf();
     sftpConf = monitorConfJson.getSftpConf();

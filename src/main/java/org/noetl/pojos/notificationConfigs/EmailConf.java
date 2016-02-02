@@ -1,8 +1,8 @@
-package org.noetl.pojos;
+package org.noetl.pojos.notificationConfigs;
 
 import java.util.List;
 
-public class MailConf {
+public class EmailConf {
   private String host;
   private int port;
   private String sender;
@@ -69,7 +69,7 @@ public class MailConf {
 
   @Override
   public String toString() {
-    return "MailConf{" +
+    return "EmailConf{" +
       "host='" + host + '\'' +
       ", port=" + port +
       ", sender='" + sender + '\'' +

@@ -1,6 +1,7 @@
 package org.noetl.pojos;
 
 import org.noetl.pojos.clusterConfigs.ClusterConfJson;
+import org.noetl.pojos.notificationConfigs.NotificationConf;
 import org.noetl.pojos.serviceConfigs.MonitorConfJson;
 
 public class AutomationConf {
@@ -8,7 +9,7 @@ public class AutomationConf {
   private String secretAccessKey;
   private String rootPath;
   private String logFile;
-  private MailConf mailConf;
+  private NotificationConf notification;
   private MonitorConfJson monitorConf;
   private ClusterConfJson clusterConf;
 
@@ -16,6 +17,14 @@ public class AutomationConf {
   private Object PROJECT;
   private Object LOGGING;
   private Object WORKFLOW;
+
+  public NotificationConf getNotification() {
+    return notification;
+  }
+
+  public void setNotification(NotificationConf notification) {
+    this.notification = notification;
+  }
 
   public String getRootPath() {
     return rootPath;
@@ -81,13 +90,6 @@ public class AutomationConf {
     this.secretAccessKey = secretAccessKey;
   }
 
-  public MailConf getMailConf() {
-    return mailConf;
-  }
-
-  public void setMailConf(MailConf mailConf) {
-    this.mailConf = mailConf;
-  }
 
   public MonitorConfJson getMonitorConf() {
     return monitorConf;

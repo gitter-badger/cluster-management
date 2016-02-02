@@ -1,6 +1,6 @@
 package org.noetl.automation.services.notification;
 
-import org.noetl.pojos.MailConf;
+import org.noetl.pojos.notificationConfigs.EmailConf;
 import org.apache.log4j.Logger;
 
 import javax.mail.Message;
@@ -14,12 +14,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-public class MailNotificationService implements INotificationService {
+public class EmailNotificationService implements INotificationService {
 
-  private final static Logger logger = Logger.getLogger(MailNotificationService.class);
-  private final MailConf mailConf;
+  private final static Logger logger = Logger.getLogger(EmailNotificationService.class);
+  private final EmailConf mailConf;
 
-  public MailNotificationService(MailConf mailConf) {
+  public EmailNotificationService(EmailConf mailConf) {
 
     this.mailConf = mailConf;
   }

@@ -6,6 +6,8 @@ import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.util.StringUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.noetl.automation.services.notification.INotificationService;
 import org.noetl.aws.EMRClusterClient;
 import org.noetl.aws.utils.AWSS3Util;
@@ -14,8 +16,6 @@ import org.noetl.pojos.AutomationConf;
 import org.noetl.pojos.clusterConfigs.ClusterConfJson;
 import org.noetl.pojos.serviceConfigs.MonitorConfJson;
 import org.noetl.utils.GeneralUtils;
-import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class ClusterGenerationService extends BaseService {
   }
 
   public ClusterGenerationService(AutomationConf automationConf) throws IOException {
-    super(automationConf.getMailConf(), automationConf.getAccessKey(), automationConf.getSecretAccessKey());
+    super(automationConf.getNotification(), automationConf.getAccessKey(), automationConf.getSecretAccessKey());
     this.rootPath = automationConf.getRootPath();
     this.clusterConfJson = automationConf.getClusterConf();
     this.monitorConfJson = automationConf.getMonitorConf();

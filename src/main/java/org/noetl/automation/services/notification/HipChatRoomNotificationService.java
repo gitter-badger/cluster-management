@@ -3,6 +3,7 @@ package org.noetl.automation.services.notification;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.log4j.Logger;
+import org.noetl.pojos.notificationConfigs.HipChatConf;
 import org.noetl.utils.GeneralUtils;
 
 import java.io.BufferedReader;
@@ -11,15 +12,15 @@ import java.io.InputStreamReader;
 public class HipChatRoomNotificationService implements INotificationService {
   private static final Logger logger = Logger.getLogger(HipChatRoomNotificationService.class);
   private String messageColor;
-  private String notifyTheRoom;
+  private boolean notifyTheRoom;
   private String restURI;
 
 
-  public HipChatRoomNotificationService(String restURI) {
-    this(restURI, "true", "green");
+  public HipChatRoomNotificationService(HipChatConf hipChatConf) {
+    this(hipChatConf.getRestURI(), hipChatConf.isNotify(), hipChatConf.getMessageColor());
   }
 
-  public HipChatRoomNotificationService(String restURI, String notifyTheRoom, String messageColor) {
+  public HipChatRoomNotificationService(String restURI, boolean notifyTheRoom, String messageColor) {
     this.restURI = restURI;
     this.notifyTheRoom = notifyTheRoom;
     this.messageColor = messageColor;

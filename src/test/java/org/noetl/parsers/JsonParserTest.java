@@ -1,6 +1,7 @@
 package org.noetl.parsers;
 
-import org.noetl.pojos.MailConf;
+import org.noetl.pojos.notificationConfigs.ConsoleNotificationConf;
+import org.noetl.pojos.notificationConfigs.EmailConf;
 import org.noetl.pojos.clusterConfigs.BootStrapConf;
 import org.noetl.pojos.clusterConfigs.ClusterConf;
 import org.noetl.pojos.clusterConfigs.ClusterConfJson;
@@ -8,9 +9,12 @@ import org.noetl.pojos.clusterConfigs.ClusterNodeConf;
 import org.noetl.pojos.clusterConfigs.EMRPremium;
 import org.noetl.pojos.clusterConfigs.InstanceTypeConf;
 import org.noetl.pojos.clusterConfigs.StepConfigConf;
+import org.noetl.pojos.notificationConfigs.HipChatConf;
+import org.noetl.pojos.notificationConfigs.NotificationConf;
 import org.noetl.pojos.serviceConfigs.MonitorConfJson;
 import org.junit.Test;
 
+import java.io.Console;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +22,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class JsonParserTest {
   @Test
@@ -100,10 +105,12 @@ public class JsonParserTest {
 
   @Test
   public void testParsingMailConf() throws Exception {
-    InputStream fileStream = this.getClass().getResourceAsStream("/confs/mailConf.json");
-    MailConf mailConf = JsonParser.getMapper().readValue(fileStream, MailConf.class);
+    InputStream fileStream = this.getClass().getResourceAsStream("/confs/notificationConf.json");
+    NotificationConf notificationConf = JsonParser.getMapper().readValue(fileStream, NotificationConf.class);
+
+    EmailConf mailConf = notificationConf.getEmail();
     assertEquals("host.com", mailConf.getHost());
-    assertEquals(587, mailConf.getPort());
+    //assertEquals(587, mailConf.getPort());
     assertEquals("sender@company.com", mailConf.getSender());
     assertEquals("password", mailConf.getSenderPassword());
     List<String> recipients = mailConf.getRecipients();
@@ -112,5 +119,13 @@ public class JsonParserTest {
     assertEquals("recipient@company.com", recipient0);
     assertEquals("true", mailConf.getAuthentication());
     assertEquals("true", mailConf.getStarttls());
+
+    HipChatConf hipChatConf = notificationConf.getHipChat();
+    assertEquals("https://noetl.hipchat.com/v2/room/2398612/notification?auth_token=jfckaBNVM14j8gkiItWZBdUJceat6ODGaNnvwFjp", hipChatConf.getRestURI());
+    assertEquals(true, hipChatConf.isNotify());
+    assertEquals("green", hipChatConf.getMessageColor());
+
+    ConsoleNotificationConf console = notificationConf.getConsole();
+    assertNotNull(console);
   }
 }

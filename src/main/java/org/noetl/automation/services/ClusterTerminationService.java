@@ -23,7 +23,7 @@ public class ClusterTerminationService extends BaseService {
   }
 
   public ClusterTerminationService(AutomationConf automationConf) throws IOException {
-    super(automationConf.getMailConf(), automationConf.getAccessKey(), automationConf.getSecretAccessKey());
+    super(automationConf.getNotification(), automationConf.getAccessKey(), automationConf.getSecretAccessKey());
     this.rootPath = automationConf.getRootPath();
     this.clusterConfJson = automationConf.getClusterConf();
   }

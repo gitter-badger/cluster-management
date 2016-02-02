@@ -3,8 +3,8 @@ package org.noetl.automation.services;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import org.noetl.automation.services.notification.INotificationService;
-import org.noetl.automation.services.notification.MailNotificationService;
-import org.noetl.pojos.MailConf;
+import org.noetl.automation.services.notification.MultipleNotificationService;
+import org.noetl.pojos.notificationConfigs.NotificationConf;
 
 public abstract class BaseService {
   protected final INotificationService notificationService;
@@ -15,8 +15,8 @@ public abstract class BaseService {
     this.credential = credential;
   }
 
-  public BaseService(MailConf mailConf, String accessKey, String secretAccessKey) {
-    notificationService = new MailNotificationService(mailConf);
+  public BaseService(NotificationConf notificationConf, String accessKey, String secretAccessKey) {
+    notificationService = new MultipleNotificationService(notificationConf);
     credential = new BasicAWSCredentials(accessKey, secretAccessKey);
   }
 
