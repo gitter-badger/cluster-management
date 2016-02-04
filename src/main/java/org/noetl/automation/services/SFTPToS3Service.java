@@ -1,5 +1,6 @@
 package org.noetl.automation.services;
 
+import org.apache.log4j.Logger;
 import org.noetl.parsers.JsonParser;
 import org.noetl.pojos.AutomationConf;
 import org.noetl.pojos.serviceConfigs.BackupConf;
@@ -7,7 +8,6 @@ import org.noetl.pojos.serviceConfigs.MonitorConf;
 import org.noetl.utils.DateTimeUtil;
 import org.noetl.utils.FileOps;
 import org.noetl.utils.GeneralUtils;
-import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class SFTPToS3Service extends BaseService {
       WatchService watchService = FileSystems.getDefault().newWatchService();
       faxFolder.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
       String[] s3Backups = new String[]{backupPaths.getS3_RAW(), backupPaths.getS3_STAGE()};
-      List<String> localBackups = backupPaths.getLOCAL();
+      String[] localBackups = backupPaths.getLOCAL();
       boolean valid;
       logger.info("SFTP to S3 service started...");
       do {
@@ -64,7 +64,7 @@ public class SFTPToS3Service extends BaseService {
             checkForCompletion(newFile);
             String timeString = DateTimeUtil.getCurrentTimeDefault();
             String destinationSuffix = "/" + DateTimeUtil.getCurrentTimeYMD();
-            List<String> localDestinations = new ArrayList<>(localBackups.size());
+            List<String> localDestinations = new ArrayList<>(localBackups.length);
             for (String localBackup : localBackups) {
               localDestinations.add(localBackup + destinationSuffix);
             }

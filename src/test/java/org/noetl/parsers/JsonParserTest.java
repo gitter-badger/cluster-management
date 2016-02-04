@@ -1,8 +1,6 @@
 package org.noetl.parsers;
 
-import org.apache.commons.lang3.StringUtils;
-import org.noetl.pojos.notificationConfigs.ConsoleNotificationConf;
-import org.noetl.pojos.notificationConfigs.EmailConf;
+import org.junit.Test;
 import org.noetl.pojos.clusterConfigs.BootStrapConf;
 import org.noetl.pojos.clusterConfigs.ClusterConf;
 import org.noetl.pojos.clusterConfigs.ClusterConfJson;
@@ -10,16 +8,16 @@ import org.noetl.pojos.clusterConfigs.ClusterNodeConf;
 import org.noetl.pojos.clusterConfigs.EMRPremium;
 import org.noetl.pojos.clusterConfigs.InstanceTypeConf;
 import org.noetl.pojos.clusterConfigs.StepConfigConf;
+import org.noetl.pojos.notificationConfigs.ConsoleNotificationConf;
+import org.noetl.pojos.notificationConfigs.EmailConf;
 import org.noetl.pojos.notificationConfigs.HipChatConf;
 import org.noetl.pojos.notificationConfigs.NotificationConf;
 import org.noetl.pojos.serviceConfigs.BackupConf;
 import org.noetl.pojos.serviceConfigs.ExpectedFilesConf;
 import org.noetl.pojos.serviceConfigs.MonitorConf;
-import org.junit.Test;
 
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -93,7 +91,7 @@ public class JsonParserTest {
   }
 
   @Test
-  public void testParsingServiceConf() throws Exception {
+  public void testMonitorConf() throws Exception {
     InputStream fileStream = this.getClass().getResourceAsStream("/confs/monitorConf.json");
     MonitorConf monitorConfJson = JsonParser.getMapper().readValue(fileStream, MonitorConf.class);
 
@@ -101,14 +99,11 @@ public class JsonParserTest {
     assertEquals("copy", monitorConfJson.getOPERATION());
 
     ExpectedFilesConf expectedFilesConf = monitorConfJson.getEXPECTED_FILES();
-    assertArrayEquals(new String[]{"exp1$", "exp2$"},
-      expectedFilesConf.getFREQUENT_FILES().toArray(new String[expectedFilesConf.getFREQUENT_FILES().size()]));
-    assertArrayEquals(new String[]{"(hi|hello)"},
-      expectedFilesConf.getINFREQUENT_FILES().toArray(new String[expectedFilesConf.getINFREQUENT_FILES().size()]));
+    assertArrayEquals(new String[]{"exp1$", "exp2$"}, expectedFilesConf.getFREQUENT_FILES());
+    assertArrayEquals(new String[]{"(hi|hello)"}, expectedFilesConf.getINFREQUENT_FILES());
 
     BackupConf backupConf = monitorConfJson.getBACKUP();
-    assertArrayEquals(new String[]{"/mnt/dest/sftp_uploads"},
-      backupConf.getLOCAL().toArray(new String[backupConf.getLOCAL().size()]));
+    assertArrayEquals(new String[]{"/mnt/dest/sftp_uploads"}, backupConf.getLOCAL());
     assertEquals("s3://bkt/raw/", backupConf.getS3_RAW());
     assertEquals("s3://bkt/stage/", backupConf.getS3_STAGE());
   }

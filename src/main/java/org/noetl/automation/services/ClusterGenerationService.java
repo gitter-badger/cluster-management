@@ -5,8 +5,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.amazonaws.util.StringUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.noetl.automation.services.notification.INotificationService;
 import org.noetl.aws.EMRClusterClient;
@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -63,7 +64,7 @@ public class ClusterGenerationService extends BaseService {
         return;
       if (monitor(filesForCluster)) {
         EMRClusterClient client = new EMRClusterClient(credential, notificationService, clusterConfJson);
-        String filesForClusterString = StringUtils.join(",", filesForCluster.toArray(new String[filesForCluster.size()]));
+        String filesForClusterString = StringUtils.join(filesForCluster, ",");
         logger.info("Those files will be used to for the cluster.\n" + filesForClusterString);
         String jobFlowId = client.startCluster();
         String fileName = CLUSTER_STARTED_PREFIX + jobFlowId;
@@ -159,8 +160,8 @@ public class ClusterGenerationService extends BaseService {
 
     String msg = String.format("%sAll data files available:\n%s\n\nFiles for cluster:\n%s",
       warning,
-      StringUtils.join("\t\n", allAvailableFiles.toArray(new String[allAvailableFiles.size()])),
-      StringUtils.join("\t\n", filesForCluster.toArray(new String[filesForCluster.size()])));
+      StringUtils.join(allAvailableFiles, "\t\n"),
+      StringUtils.join(filesForCluster, "\t\n"));
     logger.info(msg);
     notificationService.notify("Files are ready for the pipeline", msg);
     return true;
@@ -170,18 +171,18 @@ public class ClusterGenerationService extends BaseService {
    * @return fileKey - relevant Files
    */
   private HashMap<String, List<String>> constructFileMappings() {
-    List<String> expectedFiles = monitorConfJson.getEXPECTED_FILES().getFREQUENT_FILES();
+    String[] expectedFiles = monitorConfJson.getEXPECTED_FILES().getFREQUENT_FILES();
 
 
     //TODO: Combine infrequence files.
 
 
-    HashSet<String> uniqueFiles = new HashSet<>(expectedFiles);
-    if (expectedFiles.size() != uniqueFiles.size())
-      throw new RuntimeException("Found duplications in expected file configuration:\n\t" + StringUtils.join(",", expectedFiles.toArray(new String[expectedFiles.size()])));
+    HashSet<String> uniqueFiles = new HashSet<String>(Arrays.asList(expectedFiles));
+    if (expectedFiles.length != uniqueFiles.size())
+      throw new RuntimeException("Found duplications in expected file configuration:\n\t" + StringUtils.join(expectedFiles, ","));
 
     logger.info("Looking for the following files:\n"
-      + StringUtils.join(",", expectedFiles.toArray(new String[expectedFiles.size()])));
+      + StringUtils.join(expectedFiles, ","));
     HashMap<String, List<String>> fileMapping = new HashMap<>();
     for (String file : expectedFiles) {
       fileMapping.put(file, new ArrayList<String>());

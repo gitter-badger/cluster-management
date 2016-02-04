@@ -1,17 +1,15 @@
 package org.noetl.pojos.serviceConfigs;
 
-import java.util.List;
-
 public class BackupConf {
-  private List<String> LOCAL;
+  private String[] LOCAL;
   private String S3_RAW;
   private String S3_STAGE;
 
-  public List<String> getLOCAL() {
+  public String[] getLOCAL() {
     return LOCAL;
   }
 
-  public void setLOCAL(List<String> LOCAL) {
+  public void setLOCAL(String[] LOCAL) {
     this.LOCAL = LOCAL;
   }
 

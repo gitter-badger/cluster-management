@@ -1,7 +1,5 @@
 package org.noetl.pojos.serviceConfigs;
 
-import java.util.List;
-
 public class MonitorConf {
   private String PATH;
   private String OPERATION;
