@@ -2,7 +2,7 @@ package org.noetl.pojos;
 
 import org.noetl.pojos.clusterConfigs.ClusterConfJson;
 import org.noetl.pojos.notificationConfigs.NotificationConf;
-import org.noetl.pojos.serviceConfigs.MonitorConf;
+import org.noetl.pojos.monitorConfigs.MonitorConf;
 
 public class AutomationConf {
   private String accessKey;

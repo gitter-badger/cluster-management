@@ -1,4 +1,4 @@
-package org.noetl.pojos.serviceConfigs;
+package org.noetl.pojos.monitorConfigs;
 
 public class BackupConf {
   private String[] LOCAL;

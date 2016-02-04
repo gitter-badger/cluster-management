@@ -12,9 +12,10 @@ import org.noetl.pojos.notificationConfigs.ConsoleNotificationConf;
 import org.noetl.pojos.notificationConfigs.EmailConf;
 import org.noetl.pojos.notificationConfigs.HipChatConf;
 import org.noetl.pojos.notificationConfigs.NotificationConf;
-import org.noetl.pojos.serviceConfigs.BackupConf;
-import org.noetl.pojos.serviceConfigs.ExpectedFilesConf;
-import org.noetl.pojos.serviceConfigs.MonitorConf;
+import org.noetl.pojos.monitorConfigs.BackupConf;
+import org.noetl.pojos.monitorConfigs.ExpectedFilesConf;
+import org.noetl.pojos.monitorConfigs.MonitorConf;
+import org.noetl.pojos.monitorConfigs.RawFileConf;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -99,8 +100,20 @@ public class JsonParserTest {
     assertEquals("copy", monitorConfJson.getOPERATION());
 
     ExpectedFilesConf expectedFilesConf = monitorConfJson.getEXPECTED_FILES();
-    assertArrayEquals(new String[]{"exp1$", "exp2$"}, expectedFilesConf.getFREQUENT_FILES());
-    assertArrayEquals(new String[]{"(hi|hello)"}, expectedFilesConf.getINFREQUENT_FILES());
+    RawFileConf[] frequent_files = expectedFilesConf.getFREQUENT_FILES();
+    String[] names1 = new String[frequent_files.length];
+    for (int i = 0; i < frequent_files.length; i++) {
+      names1[i] = frequent_files[i].getNAME();
+    }
+    assertArrayEquals(new String[]{"exp1$", "exp2$"}, names1);
+
+
+    RawFileConf[] infrequent_files = expectedFilesConf.getINFREQUENT_FILES();
+    String[] names2 = new String[infrequent_files.length];
+    for (int i = 0; i < infrequent_files.length; i++) {
+      names2[i] = infrequent_files[i].getNAME();
+    }
+    assertArrayEquals(new String[]{"(hi|hello)"}, names2);
 
     BackupConf backupConf = monitorConfJson.getBACKUP();
     assertArrayEquals(new String[]{"/mnt/dest/sftp_uploads"}, backupConf.getLOCAL());

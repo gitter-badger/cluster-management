@@ -14,7 +14,8 @@ import org.noetl.aws.utils.AWSS3Util;
 import org.noetl.parsers.JsonParser;
 import org.noetl.pojos.AutomationConf;
 import org.noetl.pojos.clusterConfigs.ClusterConfJson;
-import org.noetl.pojos.serviceConfigs.MonitorConf;
+import org.noetl.pojos.monitorConfigs.MonitorConf;
+import org.noetl.pojos.monitorConfigs.RawFileConf;
 import org.noetl.utils.GeneralUtils;
 
 import java.io.File;
@@ -171,21 +172,26 @@ public class ClusterGenerationService extends BaseService {
    * @return fileKey - relevant Files
    */
   private HashMap<String, List<String>> constructFileMappings() {
-    String[] expectedFiles = monitorConfJson.getEXPECTED_FILES().getFREQUENT_FILES();
+
+    RawFileConf[] expectedFiles = monitorConfJson.getEXPECTED_FILES().getFREQUENT_FILES();
+    String[] names = new String[expectedFiles.length];
+    for (int i = 0; i < expectedFiles.length; i++) {
+      names[i] = expectedFiles[i].getNAME();
+    }
 
 
     //TODO: Combine infrequence files.
 
 
-    HashSet<String> uniqueFiles = new HashSet<String>(Arrays.asList(expectedFiles));
+    HashSet<String> uniqueFiles = new HashSet<String>(Arrays.asList(names));
     if (expectedFiles.length != uniqueFiles.size())
       throw new RuntimeException("Found duplications in expected file configuration:\n\t" + StringUtils.join(expectedFiles, ","));
 
     logger.info("Looking for the following files:\n"
       + StringUtils.join(expectedFiles, ","));
     HashMap<String, List<String>> fileMapping = new HashMap<>();
-    for (String file : expectedFiles) {
-      fileMapping.put(file, new ArrayList<String>());
+    for (RawFileConf file : expectedFiles) {
+      fileMapping.put(file.getNAME(), new ArrayList<String>());
     }
 
     ArrayList<String> allFiles = getAllFiles();
@@ -193,8 +199,8 @@ public class ClusterGenerationService extends BaseService {
       logger.info("Find prefix: " + prefix);
       int fileNameStarts = prefix.lastIndexOf("/");
       String fileName = prefix.substring(fileNameStarts + 1);
-      for (String cef : expectedFiles) {
-        if (fileName.contains(cef)) {
+      for (RawFileConf cef : expectedFiles) {
+        if (fileName.contains(cef.getNAME())) {
           fileMapping.get(cef).add(fileName);
           break;
         }

@@ -3,11 +3,20 @@
   "OPERATION": "copy",
   "EXPECTED_FILES": {
     "FREQUENT_FILES": [
-      "exp1$",
-      "exp2$"
+      {
+        "NAME": "exp1$",
+        "PLACE_HOLDERS": ""
+      },
+      {
+        "NAME": "exp2$",
+        "PLACE_HOLDERS": ""
+      }
     ],
     "INFREQUENT_FILES": [
-      "(hi|hello)"
+      {
+        "NAME": "(hi|hello)",
+        "PLACE_HOLDERS": ""
+      }
     ]
   },
   "BACKUP": {
