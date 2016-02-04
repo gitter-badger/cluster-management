@@ -1,40 +1,31 @@
 package org.noetl.pojos.notificationConfigs;
 
 public class HipChatConf {
-  private String restURI;
-  private boolean notify;
-  private String messageColor;
+  private String RESTURI;
+  private boolean NOTIFY;
+  private String MESSAGE_COLOR;
 
-  public String getRestURI() {
-    return restURI;
+  public String getRESTURI() {
+    return RESTURI;
   }
 
-  public void setRestURI(String restURI) {
-    this.restURI = restURI;
+  public void setRESTURI(String RESTURI) {
+    this.RESTURI = RESTURI;
   }
 
-  public boolean isNotify() {
-    return notify;
+  public boolean isNOTIFY() {
+    return NOTIFY;
   }
 
-  public void setNotify(boolean notify) {
-    this.notify = notify;
+  public void setNOTIFY(boolean NOTIFY) {
+    this.NOTIFY = NOTIFY;
   }
 
-  public String getMessageColor() {
-    return messageColor;
+  public String getMESSAGE_COLOR() {
+    return MESSAGE_COLOR;
   }
 
-  public void setMessageColor(String messageColor) {
-    this.messageColor = messageColor;
-  }
-
-  @Override
-  public String toString() {
-    return "HipChatConf{" +
-      "restURI='" + restURI + '\'' +
-      ", notify=" + notify +
-      ", messageColor='" + messageColor + '\'' +
-      '}';
+  public void setMESSAGE_COLOR(String MESSAGE_COLOR) {
+    this.MESSAGE_COLOR = MESSAGE_COLOR;
   }
 }

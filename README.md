@@ -5,26 +5,26 @@ call ./showUsage.sh to see usage
 
 # configs
 # notification configs
-You have 3 options for the notification service. They are email, hipChat, and console. See the example configurations below for details. 
+You have 3 options for the notification service. They are EMAIL, HIPCHAT, and CONSOLE. See the example configurations below for details. 
 "notification":
 {
-  "email": {
-    "host": "host.com",
-    "port": 587,
-    "sender": "sender@company.com",
-    "senderPassword": "password",
-    "recipients": [
+  "EMAIL": {
+    "HOST": "HOST.com",
+    "PORT": 587,
+    "SENDER": "SENDER@company.com",
+    "SENDER_PASSWORD": "password",
+    "RECIPIENTS": [
       "recipient@company.com"
     ],
-    "authentication": "true",
-    "starttls": "true"
+    "AUTHENTICATION": "true",
+    "STARTTLS": "true"
   },
-  "hipChat": {
-    "restURI": "https://noetl.hipchat.com/v2/room/2398612/notification?auth_token=jfckaBNVM14j8gkiItWZBdUJceat6ODGaNnvwFjp",
-    "notify": true,
-    "messageColor": "green"
+  "HIPCHAT": {
+    "RESTURI": "https://noetl.hipchat.com/v2/room/2398612/notification?auth_token=jfckaBNVM14j8gkiItWZBdUJceat6ODGaNnvwFjp",
+    "NOTIFY": true,
+    "MESSAGE_COLOR": "green"
   },
-  "console": {}
+  "CONSOLE": {}
 }
 
 

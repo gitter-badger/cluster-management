@@ -113,24 +113,24 @@ public class JsonParserTest {
     InputStream fileStream = this.getClass().getResourceAsStream("/confs/notificationConf.json");
     NotificationConf notificationConf = JsonParser.getMapper().readValue(fileStream, NotificationConf.class);
 
-    EmailConf mailConf = notificationConf.getEmail();
-    assertEquals("host.com", mailConf.getHost());
-    //assertEquals(587, mailConf.getPort());
-    assertEquals("sender@company.com", mailConf.getSender());
-    assertEquals("password", mailConf.getSenderPassword());
-    List<String> recipients = mailConf.getRecipients();
-    assertEquals(1, recipients.size());
-    String recipient0 = recipients.get(0);
+    EmailConf mailConf = notificationConf.getEMAIL();
+    assertEquals("host.com", mailConf.getHOST());
+    //assertEquals(587, mailConf.getPORT());
+    assertEquals("sender@company.com", mailConf.getSENDER());
+    assertEquals("password", mailConf.getSENDER_PASSWORD());
+    String[] recipients = mailConf.getRECIPIENTS();
+    assertEquals(1, recipients.length);
+    String recipient0 = recipients[0];
     assertEquals("recipient@company.com", recipient0);
-    assertEquals("true", mailConf.getAuthentication());
-    assertEquals("true", mailConf.getStarttls());
+    assertEquals("true", mailConf.getAUTHENTICATION());
+    assertEquals("true", mailConf.getSTARTTLS());
 
-    HipChatConf hipChatConf = notificationConf.getHipChat();
-    assertEquals("https://noetl.hipchat.com/v2/room/2398612/notification?auth_token=jfckaBNVM14j8gkiItWZBdUJceat6ODGaNnvwFjp", hipChatConf.getRestURI());
-    assertEquals(true, hipChatConf.isNotify());
-    assertEquals("green", hipChatConf.getMessageColor());
+    HipChatConf hipChatConf = notificationConf.getHIPCHAT();
+    assertEquals("https://noetl.hipchat.com/v2/room/2398612/notification?auth_token=jfckaBNVM14j8gkiItWZBdUJceat6ODGaNnvwFjp", hipChatConf.getRESTURI());
+    assertEquals(true, hipChatConf.isNOTIFY());
+    assertEquals("green", hipChatConf.getMESSAGE_COLOR());
 
-    ConsoleNotificationConf console = notificationConf.getConsole();
+    ConsoleNotificationConf console = notificationConf.getCONSOLE();
     assertNotNull(console);
   }
 }

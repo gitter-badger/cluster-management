@@ -13,13 +13,13 @@ public class MultipleNotificationService implements INotificationService {
 
   public MultipleNotificationService(NotificationConf notificationConf) {
     notificationServices = new ArrayList<>();
-    EmailConf email = notificationConf.getEmail();
+    EmailConf email = notificationConf.getEMAIL();
     if (email != null)
       notificationServices.add(new EmailNotificationService(email));
-    HipChatConf hipChat = notificationConf.getHipChat();
+    HipChatConf hipChat = notificationConf.getHIPCHAT();
     if (hipChat != null)
       notificationServices.add(new HipChatRoomNotificationService(hipChat));
-    ConsoleNotificationConf console = notificationConf.getConsole();
+    ConsoleNotificationConf console = notificationConf.getCONSOLE();
     if (console != null)
       notificationServices.add(new ConsoleNotificationService());
   }

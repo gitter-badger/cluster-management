@@ -1,31 +1,31 @@
 package org.noetl.pojos.notificationConfigs;
 
 public class NotificationConf {
-  private EmailConf email;
-  private HipChatConf hipChat;
-  private ConsoleNotificationConf console;
+  private EmailConf EMAIL;
+  private HipChatConf HIPCHAT;
+  private ConsoleNotificationConf CONSOLE;
 
-  public EmailConf getEmail() {
-    return email;
+  public EmailConf getEMAIL() {
+    return EMAIL;
   }
 
-  public void setEmail(EmailConf email) {
-    this.email = email;
+  public void setEMAIL(EmailConf EMAIL) {
+    this.EMAIL = EMAIL;
   }
 
-  public HipChatConf getHipChat() {
-    return hipChat;
+  public HipChatConf getHIPCHAT() {
+    return HIPCHAT;
   }
 
-  public void setHipChat(HipChatConf hipChat) {
-    this.hipChat = hipChat;
+  public void setHIPCHAT(HipChatConf HIPCHAT) {
+    this.HIPCHAT = HIPCHAT;
   }
 
-  public ConsoleNotificationConf getConsole() {
-    return console;
+  public ConsoleNotificationConf getCONSOLE() {
+    return CONSOLE;
   }
 
-  public void setConsole(ConsoleNotificationConf console) {
-    this.console = console;
+  public void setCONSOLE(ConsoleNotificationConf CONSOLE) {
+    this.CONSOLE = CONSOLE;
   }
 }

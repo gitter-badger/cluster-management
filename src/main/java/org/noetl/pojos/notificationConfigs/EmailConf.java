@@ -1,82 +1,67 @@
 package org.noetl.pojos.notificationConfigs;
 
-import java.util.List;
-
 public class EmailConf {
-  private String host;
-  private int port;
-  private String sender;
-  private String senderPassword;
-  private List<String> recipients;
-  private String authentication;
-  private String starttls;
+  private String HOST;
+  private int PORT;
+  private String SENDER;
+  private String SENDER_PASSWORD;
+  private String[] RECIPIENTS;
+  private String AUTHENTICATION;
+  private String STARTTLS;
 
-  public String getHost() {
-    return host;
+  public String getHOST() {
+    return HOST;
   }
 
-  public void setHost(String host) {
-    this.host = host;
+  public void setHOST(String HOST) {
+    this.HOST = HOST;
   }
 
-  public int getPort() {
-    return port;
+  public int getPORT() {
+    return PORT;
   }
 
-  public void setPort(int port) {
-    this.port = port;
+  public void setPORT(int PORT) {
+    this.PORT = PORT;
   }
 
-  public String getSender() {
-    return sender;
+  public String getSENDER() {
+    return SENDER;
   }
 
-  public void setSender(String sender) {
-    this.sender = sender;
+  public void setSENDER(String SENDER) {
+    this.SENDER = SENDER;
   }
 
-  public String getSenderPassword() {
-    return senderPassword;
+  public String getSENDER_PASSWORD() {
+    return SENDER_PASSWORD;
   }
 
-  public void setSenderPassword(String senderPassword) {
-    this.senderPassword = senderPassword;
+  public void setSENDER_PASSWORD(String SENDER_PASSWORD) {
+    this.SENDER_PASSWORD = SENDER_PASSWORD;
   }
 
-  public List<String> getRecipients() {
-    return recipients;
+  public String[] getRECIPIENTS() {
+    return RECIPIENTS;
   }
 
-  public void setRecipients(List<String> recipients) {
-    this.recipients = recipients;
+  public void setRECIPIENTS(String[] RECIPIENTS) {
+    this.RECIPIENTS = RECIPIENTS;
   }
 
-  public String getAuthentication() {
-    return authentication;
+  public String getAUTHENTICATION() {
+    return AUTHENTICATION;
   }
 
-  public void setAuthentication(String authentication) {
-    this.authentication = authentication;
+  public void setAUTHENTICATION(String AUTHENTICATION) {
+    this.AUTHENTICATION = AUTHENTICATION;
   }
 
-  public String getStarttls() {
-    return starttls;
+  public String getSTARTTLS() {
+    return STARTTLS;
   }
 
-  public void setStarttls(String starttls) {
-    this.starttls = starttls;
-  }
-
-  @Override
-  public String toString() {
-    return "EmailConf{" +
-      "host='" + host + '\'' +
-      ", port=" + port +
-      ", sender='" + sender + '\'' +
-      ", senderPassword='" + senderPassword + '\'' +
-      ", recipients=" + recipients +
-      ", authentication='" + authentication + '\'' +
-      ", starttls='" + starttls + '\'' +
-      '}';
+  public void setSTARTTLS(String STARTTLS) {
+    this.STARTTLS = STARTTLS;
   }
 }

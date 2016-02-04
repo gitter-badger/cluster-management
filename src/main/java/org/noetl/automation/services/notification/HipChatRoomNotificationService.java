@@ -17,7 +17,7 @@ public class HipChatRoomNotificationService implements INotificationService {
 
 
   public HipChatRoomNotificationService(HipChatConf hipChatConf) {
-    this(hipChatConf.getRestURI(), hipChatConf.isNotify(), hipChatConf.getMessageColor());
+    this(hipChatConf.getRESTURI(), hipChatConf.isNOTIFY(), hipChatConf.getMESSAGE_COLOR());
   }
 
   public HipChatRoomNotificationService(String restURI, boolean notifyTheRoom, String messageColor) {

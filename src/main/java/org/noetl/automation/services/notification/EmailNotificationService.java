@@ -28,8 +28,8 @@ public class EmailNotificationService implements INotificationService {
     try {
       Session session = initialization();
       Message message = new MimeMessage(session);
-      message.setFrom(new InternetAddress(mailConf.getSender()));
-      List<String> recipientList = mailConf.getRecipients();
+      message.setFrom(new InternetAddress(mailConf.getSENDER()));
+      String[] recipientList = mailConf.getRECIPIENTS();
 
       for (String receiver : recipientList) {
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiver));
@@ -37,7 +37,7 @@ public class EmailNotificationService implements INotificationService {
         message.setText(text);
         Transport.send(message);
       }
-      logger.info("Sent email to: " + Arrays.toString(recipientList.toArray()));
+      logger.info("Sent email to: " + Arrays.toString(recipientList));
     } catch (MessagingException e) {
       throw new RuntimeException(e);
     }
@@ -46,17 +46,17 @@ public class EmailNotificationService implements INotificationService {
   private Session initialization() {
     Properties props = new Properties();
     //It must be a STRING!!!!!
-    props.put("mail.smtp.auth", mailConf.getAuthentication());
+    props.put("mail.smtp.auth", mailConf.getAUTHENTICATION());
     //It must be a STRING!!!!!
-    props.put("mail.smtp.starttls.enable", mailConf.getStarttls());
-    props.put("mail.smtp.host", mailConf.getHost());
-    props.put("mail.smtp.port", mailConf.getPort());
+    props.put("mail.smtp.starttls.enable", mailConf.getSTARTTLS());
+    props.put("mail.smtp.host", mailConf.getHOST());
+    props.put("mail.smtp.port", mailConf.getPORT());
 
     Session session = Session.getDefaultInstance(props,
       new javax.mail.Authenticator() {
         protected PasswordAuthentication getPasswordAuthentication() {
           return new PasswordAuthentication
-            (mailConf.getSender(), mailConf.getSenderPassword());
+            (mailConf.getSENDER(), mailConf.getSENDER_PASSWORD());
         }
       });
     logger.info("Finish mail service setup.");
