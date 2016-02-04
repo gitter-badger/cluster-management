@@ -2,7 +2,7 @@ package org.noetl.pojos;
 
 import org.noetl.pojos.clusterConfigs.ClusterConfJson;
 import org.noetl.pojos.notificationConfigs.NotificationConf;
-import org.noetl.pojos.serviceConfigs.MonitorConfJson;
+import org.noetl.pojos.serviceConfigs.MonitorConf;
 
 public class AutomationConf {
   private String accessKey;
@@ -10,7 +10,7 @@ public class AutomationConf {
   private String rootPath;
   private String logFile;
   private NotificationConf notification;
-  private MonitorConfJson monitorConf;
+  private MonitorConf monitorConf;
   private ClusterConfJson clusterConf;
 
   private Object OS_ENV;
@@ -91,11 +91,11 @@ public class AutomationConf {
   }
 
 
-  public MonitorConfJson getMonitorConf() {
+  public MonitorConf getMonitorConf() {
     return monitorConf;
   }
 
-  public void setMonitorConf(MonitorConfJson monitorConf) {
+  public void setMonitorConf(MonitorConf monitorConf) {
     this.monitorConf = monitorConf;
   }
 

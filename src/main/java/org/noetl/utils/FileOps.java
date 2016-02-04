@@ -3,14 +3,16 @@ package org.noetl.utils;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
-import com.amazonaws.util.StringUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.noetl.automation.services.notification.INotificationService;
 import org.noetl.aws.utils.AWSS3Util;
-import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class FileOps {
 
@@ -23,12 +25,11 @@ public class FileOps {
     this.notifier = notifier;
   }
 
-  public void uploadFileToS3(File srcFile, String[] s3Destinations, AWSCredentials credential) {
+  public void uploadFileToS3(File srcFile, Iterable<String> s3Destinations, AWSCredentials credential) {
     TransferManager tx = null;
-    String[] destinations = new String[s3Destinations.length];
+    List<String> destinations = new LinkedList<>();
     try {
-      for (int i = 0; i < s3Destinations.length; ++i) {
-        String s3Destination = s3Destinations[i];
+      for (String s3Destination : s3Destinations) {
         String bucket = AWSS3Util.getBucketName(s3Destination);
         String key = AWSS3Util.getKey(s3Destination);
 
@@ -36,10 +37,9 @@ public class FileOps {
         tx = new TransferManager(credential);
         final Upload upload = tx.upload(bucket, key + srcFile.getName(), srcFile);
         upload.waitForCompletion();
-        destinations[i] = s3Destination + srcFile.getName();
+        destinations.add(s3Destination + srcFile.getName());
       }
-
-      String msg = String.format("A new file got uploaded to s3 successfully.\n\nFile:\n\t%s\nS3 Destinations:\n\t%s\n", srcFile.toString(), StringUtils.join("\n\t", destinations));
+      String msg = String.format("A new file got uploaded to s3 successfully.\n\nFile:\n\t%s\nS3 Destinations:\n\t%s\n", srcFile.toString(), StringUtils.join(destinations, "\n\t"));
       logger.info(msg);
       notifier.notify("New file got uploaded to S3", msg);
     } catch (Exception e) {
@@ -47,7 +47,7 @@ public class FileOps {
       String errorMsg = String.format("%s\n\nFile:\n\t%s\nS3 Destinations:\n\t%s\nError Message:\n\t%s\n",
         subject,
         srcFile.toString(),
-        StringUtils.join("\n\t", destinations),
+        StringUtils.join(destinations, "\n\t"),
         GeneralUtils.getStackTrace(e));
       logger.error(errorMsg);
       notifier.notify(subject, errorMsg);
@@ -57,16 +57,15 @@ public class FileOps {
     }
   }
 
-  public void uploadFolderS3(File folder, String[] s3Destinations, AWSCredentials credential) {
+  public void uploadFolderS3(File folder, Iterable<String> s3Destinations, AWSCredentials credential) {
     TransferManager tx = null;
     String folderName = folder.getName();
     String folderPath = folder.toString();
     int pathLength = folderPath.length();
     ArrayList<String> transferedFiles = new ArrayList<>();
-    String[] destinations = new String[s3Destinations.length];
+    List<String> destinations = new LinkedList<>();
     try {
-      for (int i = 0; i < s3Destinations.length; ++i) {
-        String s3Destination = s3Destinations[i];
+      for (String s3Destination : s3Destinations) {
         String bucket = AWSS3Util.getBucketName(s3Destination);
         String s3DestinationKey = AWSS3Util.getKey(s3Destination);
         logger.info(String.format("Uploading folder '%s' to s3 '%s'.", folderPath, s3Destination));
@@ -82,14 +81,13 @@ public class FileOps {
           transferedFiles.add(uploaded);
           logger.info("Uploaded file: " + uploaded);
         }
-        destinations[i] = s3Destination + folderName;
+        destinations.add(s3Destination + folderName);
       }
-      String[] tmpArray = new String[transferedFiles.size()];
       String msg = String.format(
         "A new folder got uploaded to s3 successfully.\n\nFolder:\n\t%s\nS3 Destinations:\n\t%s\nFiles:\n\t\n%s",
         folderPath,
-        StringUtils.join("\n\t", destinations),
-        StringUtils.join("\n\t", transferedFiles.toArray(tmpArray)));
+        StringUtils.join(destinations, "\n\t"),
+        StringUtils.join(transferedFiles, "\n\t"));
       logger.info(msg);
       notifier.notify("New folder got uploaded to S3", msg);
     } catch (Exception e) {
@@ -99,8 +97,8 @@ public class FileOps {
         "%s\n\nFolder:\t%s\nS3 Destinations:\n\t%s\nFiles:\n\t\n%s\nError Message:\n\t%s\n",
         subject,
         folderPath,
-        StringUtils.join("\n\t", destinations),
-        StringUtils.join("\n\t", transferedFiles.toArray(stockArr)), GeneralUtils.getStackTrace(e));
+        StringUtils.join(destinations, "\n\t"),
+        StringUtils.join(transferedFiles, "\n\t"), GeneralUtils.getStackTrace(e));
       logger.error(errorMsg);
       notifier.notify(subject, errorMsg);
     } finally {
@@ -127,8 +125,10 @@ public class FileOps {
     return allFiles;
   }
 
-  public void moveFileLocal(File file, String localDestination) {
-    moveAndRenameFileLocal(file, new File(localDestination, file.getName()).getAbsolutePath());
+  public void moveFileLocal(File file, Iterable<String> localDestinations) {
+    for (String dest : localDestinations) {
+      moveAndRenameFileLocal(file, new File(dest, file.getName()).getAbsolutePath());
+    }
   }
 
   private void moveAndRenameFileLocal(File file, String newFullPath) {
@@ -140,7 +140,7 @@ public class FileOps {
       File destFile = new File(newFullPath);
       if (destFile.exists())
         throw new RuntimeException("The destination path already exists: " + destFile.getAbsolutePath());
-      FileUtils.moveFile(file, destFile);
+      FileUtils.copyFile(file, destFile);
     } catch (Exception e) {
       String subject = "Local file movement failed. Keep the file at its original place.";
       String errorMsg = String.format("%s\n%s", subject, GeneralUtils.getStackTrace(e));
@@ -149,8 +149,10 @@ public class FileOps {
     }
   }
 
-  public void moveDirectoryLocal(File folder, String localDestination) {
-    moveAndRenameDirectoryLocal(folder, new File(localDestination, folder.getName()).getAbsolutePath());
+  public void moveDirectoryLocal(File folder, Iterable<String> localDestinations) {
+    for (String dest : localDestinations) {
+      moveAndRenameDirectoryLocal(folder, new File(dest, folder.getName()).getAbsolutePath());
+    }
   }
 
   private void moveAndRenameDirectoryLocal(File folder, String newFullPath) {

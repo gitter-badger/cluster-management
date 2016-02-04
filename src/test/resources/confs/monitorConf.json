@@ -1,14 +1,20 @@
 {
-  "expectedFiles": [
-    "exp1",
-    "exp2"
-  ],
-  "sftpConf": {
-    "source": "/mnt/src/sftp_uploads",
-    "destination": "/mnt/dest/sftp_uploads"
+  "PATH": "/mnt/src/sftp_uploads",
+  "OPERATION": "copy",
+  "EXPECTED_FILES": {
+    "FREQUENT_FILES": [
+      "exp1$",
+      "exp2$"
+    ],
+    "INFREQUENT_FILES": [
+      "(hi|hello)"
+    ]
   },
-  "s3Conf": {
-    "backUp": "s3://bkt/fresh/",
-    "stage": "s3://bkt/stage/"
+  "BACKUP": {
+    "LOCAL": [
+      "/mnt/dest/sftp_uploads"
+    ],
+    "S3_RAW": "s3://bkt/raw/",
+    "S3_STAGE": "s3://bkt/stage/"
   }
 }

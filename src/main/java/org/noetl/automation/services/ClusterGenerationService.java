@@ -14,7 +14,7 @@ import org.noetl.aws.utils.AWSS3Util;
 import org.noetl.parsers.JsonParser;
 import org.noetl.pojos.AutomationConf;
 import org.noetl.pojos.clusterConfigs.ClusterConfJson;
-import org.noetl.pojos.serviceConfigs.MonitorConfJson;
+import org.noetl.pojos.serviceConfigs.MonitorConf;
 import org.noetl.utils.GeneralUtils;
 
 import java.io.File;
@@ -34,10 +34,10 @@ public class ClusterGenerationService extends BaseService {
   private static final Logger logger = Logger.getLogger(ClusterGenerationService.class);
   public static final String CLUSTER_STARTED_PREFIX = "ClusterStarted_JFId@";
   private final ClusterConfJson clusterConfJson;
-  private final MonitorConfJson monitorConfJson;
+  private final MonitorConf monitorConfJson;
   private final String rootPath;
 
-  ClusterGenerationService(ClusterConfJson clusterConfJson, MonitorConfJson serviceConf, INotificationService notificationService, AWSCredentials credential) {
+  ClusterGenerationService(ClusterConfJson clusterConfJson, MonitorConf serviceConf, INotificationService notificationService, AWSCredentials credential) {
     super(notificationService, credential);
     this.clusterConfJson = clusterConfJson;
     this.monitorConfJson = serviceConf;
@@ -170,7 +170,12 @@ public class ClusterGenerationService extends BaseService {
    * @return fileKey - relevant Files
    */
   private HashMap<String, List<String>> constructFileMappings() {
-    List<String> expectedFiles = monitorConfJson.getExpectedFiles();
+    List<String> expectedFiles = monitorConfJson.getEXPECTED_FILES().getFREQUENT_FILES();
+
+
+    //TODO: Combine infrequence files.
+
+
     HashSet<String> uniqueFiles = new HashSet<>(expectedFiles);
     if (expectedFiles.size() != uniqueFiles.size())
       throw new RuntimeException("Found duplications in expected file configuration:\n\t" + StringUtils.join(",", expectedFiles.toArray(new String[expectedFiles.size()])));
@@ -203,7 +208,7 @@ public class ClusterGenerationService extends BaseService {
   private ArrayList<String> getAllFiles() {
     ArrayList<String> allFiles = new ArrayList<>();
     AmazonS3Client s3client = new AmazonS3Client(credential);
-    String s3path = monitorConfJson.getS3Conf().getStage();
+    String s3path = monitorConfJson.getBACKUP().getS3_STAGE();
     String bucket = AWSS3Util.getBucketName(s3path);
     String key = AWSS3Util.getKey(s3path);
 
